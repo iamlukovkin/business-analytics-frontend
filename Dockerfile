@@ -4,7 +4,6 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN if [ ! -f ".env" ]; then echo ".env file not found! Aborting build."; exit 1; fi
 RUN npm install --production
 
 COPY . .

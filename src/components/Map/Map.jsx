@@ -69,34 +69,62 @@ export default function MapElement() {
 
         const fetchMapData = async () => {
             try {
-                setLoading(true);  // Устанавливаем загрузку в true
+                setLoading(true);
                 let requestString = source + `/api/v2/map/areas?layerId=${selectedLayerId}&hexSize=${hexSize}`;
                 const res = await fetch(requestString);
                 if (!res.ok) {
                     console.log("Failed to fetch layers");
                     return;
                 }
-                const data = await res.json();
-                const uniqueYears = [...new Set(data.map(entry => entry.year))]
-                    .sort((a, b) => a - b);
-                setYears(uniqueYears);
-                if (!selectedYear && uniqueYears.length > 0) setSelectedYear(uniqueYears[0]);
-                const filtered = data.filter(entry =>
-                    (selectedYear ? entry.year === selectedYear : true)
-                    && (selectedFeatureId === null || entry.feature_id === selectedFeatureId));
 
-                const measurements = filtered.map(entry => entry.feature_measurement);
+                const rawData = await res.json();
+
+                const extracted = [];
+
+                const collectedYears = new Set();
+
+                for (const [h3, featureMap] of Object.entries(rawData)) {
+                    for (const [featureId, yearMap] of Object.entries(featureMap)) {
+                        for (const [year, measurement] of Object.entries(yearMap)) {
+                            const y = Number(year);
+                            collectedYears.add(y);
+                            const id = Number(featureId);
+                            if ((selectedFeatureId && id !== selectedFeatureId) || (selectedYear && y !== selectedYear)) {
+                                continue;
+                            }
+
+                            extracted.push({
+                                h3,
+                                feature_id: id,
+                                year: y,
+                                feature_measurement: measurement
+                            });
+                        }
+                    }
+                }
+
+                const sortedYears = Array.from(collectedYears).sort((a, b) => a - b);
+                setYears(sortedYears);
+                if (!selectedYear && sortedYears.length > 0) setSelectedYear(sortedYears[0]);
+
+                const measurements = extracted.map(entry => entry.feature_measurement);
                 const min = Math.min(...measurements);
                 const max = Math.max(...measurements);
 
-                const geoJsonFeatures = filtered.map(entry => {
+                const geoJsonFeatures = extracted.map(entry => {
                     const opacity = min !== max
                         ? ((entry.feature_measurement - min) / (max - min)) * 0.7 + 0.3 : 0.3;
                     return {
-                        type: "Feature", properties: {
-                            id: entry.feature_id, color: "#00AAFF", opacity, year: entry.year
-                        }, geometry: {
-                            type: "Polygon", coordinates: [cellToBoundary(entry.h3, true)]
+                        type: "Feature",
+                        properties: {
+                            id: entry.feature_id,
+                            color: "#009DC5",
+                            opacity,
+                            year: entry.year
+                        },
+                        geometry: {
+                            type: "Polygon",
+                            coordinates: [cellToBoundary(entry.h3, true)]
                         }
                     };
                 });
@@ -109,10 +137,8 @@ export default function MapElement() {
             }
         };
 
-        fetchMapData().catch((_) => {
-            setLoading(false);
-        });
-    }, [selectedLayerId, selectedYear, selectedFeatureId, hexSize]);
+        fetchMapData().catch(() => setLoading(false));
+    }, [selectedLayerId, selectedYear, selectedFeatureId, hexSize])
 
     const layerProperties = {
         id: "area-layer", type: "fill", paint: {

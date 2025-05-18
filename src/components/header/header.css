@@ -5,13 +5,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center; /* Центрирование по горизонтали */
+    justify-content: center;
     gap: 1rem;
     background-color: black;
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-    text-align: center; /* Для симметрии текста */
+    text-align: center;
 }
 
 .logo-svg {

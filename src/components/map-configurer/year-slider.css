@@ -1,25 +1,82 @@
 .year-slider-container {
     width: 100%;
     margin: 1rem 0;
-    /*text-align: center;*/
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .year-slider-label {
     display: block;
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
+    color: #333;
+    font-weight: 600;
 }
 
 .year-slider {
+    -webkit-appearance: none;
     width: 100%;
-    accent-color: #4285f4;
+    height: 12px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #5a2db1 0%, #ad5afd 100%);
+    outline: none;
     cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/* Ползунок для WebKit */
+.year-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border: 3px solid #5a2db1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin-top: -8px; /* чтобы центрировать ползунок по высоте */
+    box-shadow: 0 2px 6px rgba(90, 45, 177, 0.4);
+}
+
+.year-slider:hover::-webkit-slider-thumb {
+    background-color: #ad5afd;
+    border-color: #5a2db1;
+}
+
+.year-slider:active::-webkit-slider-thumb {
+    background-color: #7e27c7;
+    border-color: #3e1f80;
+    box-shadow: 0 0 8px #7e27c7;
+}
+
+/* Ползунок для Firefox */
+.year-slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border: 3px solid #5a2db1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    box-shadow: 0 2px 6px rgba(90, 45, 177, 0.4);
+}
+
+.year-slider:hover::-moz-range-thumb {
+    background-color: #ad5afd;
+    border-color: #5a2db1;
+}
+
+.year-slider:active::-moz-range-thumb {
+    background-color: #7e27c7;
+    border-color: #3e1f80;
+    box-shadow: 0 0 8px #7e27c7;
 }
 
 .year-slider-minmax {
     display: flex;
     justify-content: space-between;
     font-size: 0.75rem;
-    color: #444;
+    color: #5a2db1;
     margin-top: 0.25rem;
+    font-weight: 600;
 }

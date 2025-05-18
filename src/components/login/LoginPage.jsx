@@ -13,7 +13,7 @@ export function LoginPage() {
         e.preventDefault();
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v2/login`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v2/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -22,12 +22,13 @@ export function LoginPage() {
             });
 
             if (!response.ok) {
-                console.log("Ошибка авторизации");
+                setError("Неверный логин или пароль");
+                return;
             }
 
-            const data = await response.json();
-            localStorage.setItem("token", data.token); // сохраняем токен
-            navigate("/dashboard"); // переход на защищённую страницу
+            const data = await response.text();
+            localStorage.setItem("username", username);
+            navigate("/map");
         } catch (err) {
             setError("Неверный логин или пароль");
         }

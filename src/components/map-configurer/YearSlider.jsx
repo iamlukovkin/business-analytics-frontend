@@ -1,4 +1,3 @@
-// src/components/Map/YearSlider.jsx
 import React from "react";
 import "./year-slider.css";
 

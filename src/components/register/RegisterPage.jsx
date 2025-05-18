@@ -1,10 +1,11 @@
-import '../login/login.css';
+import '../login/login.css'
 
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 export function RegisterPage() {
     const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -15,20 +16,18 @@ export function RegisterPage() {
         try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/register`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ username, password })
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, password })
             });
 
             if (!response.ok) {
-                console.log("Ошибка регистрации");
+                const err = await response.json();
+                console.log(err.message || "Ошибка регистрации");
             }
 
-            // Можно сразу авторизовать, но пока редирект на логин
             navigate("/login");
         } catch (err) {
-            setError("Пользователь уже существует или ошибка регистрации");
+            setError(err.message || "Ошибка регистрации");
         }
     };
 
@@ -41,6 +40,13 @@ export function RegisterPage() {
                     placeholder="Логин"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    required
+                />
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                 />
                 <input

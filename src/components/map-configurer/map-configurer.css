@@ -2,26 +2,44 @@
     width: 100vw;
     height: 100vh;
     position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9fafb;
+    color: #333;
 }
-
 
 .properties-container {
     position: absolute;
-    top: 1rem;
-    bottom: 1rem;
-    right: 0;
-    z-index: 2;
-    width: 28%;
-    background-color: rgba(234, 234, 234, 0.8); /* полупрозрачный фон */
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    padding: 1.5rem 1rem;
-    font-size: 0.85rem;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 10;
+    width: 24%;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 2rem 1.5rem;
+    font-size: 0.9rem;
     display: flex;
     flex-direction: column;
-    /*align-items: center;*/
-    /*text-align: center;*/
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #a18cff transparent;
+}
+
+/* Стиль скроллбара для WebKit */
+.properties-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.properties-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.properties-container::-webkit-scrollbar-thumb {
+    background-color: #a18cff;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
 }
 
 .map-container {
@@ -31,61 +49,57 @@
     top: 0;
     left: 0;
     z-index: 1;
+    background: #e6e9f0;
 }
 
-.layer-radio-label {
+.layer-radio-label,
+.feature-radio-label {
     cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    padding: 0.7rem 1.25rem;
+    border-radius: 8px;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
     user-select: none;
-    transition: background-color 0.2s;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+    font-size: 0.95rem;
+    color: #444;
+    box-shadow: inset 0 0 0 1px transparent;
 }
 
-.layer-radio-label:hover {
-    background-color: #f5f5f5;
+.layer-radio-label:hover,
+.feature-radio-label:hover {
+    background-color: #eef3ff;
+    box-shadow: inset 0 0 0 1px #5a2db1;
 }
 
 .layer-radio-label.selected {
-    background-color: #c3dbff;
-    font-weight: bold;
+    background-color: #5a2db1;
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(90, 45, 177, 0.4);
 }
 
-.layer-radio-label input[type="radio"] {
+.feature-radio-label.selected {
+    background-color: #7c9aff;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(124, 154, 255, 0.35);
+}
+
+.layer-radio-label input[type="radio"],
+.feature-radio-label input[type="radio"] {
     cursor: pointer;
+    accent-color: #5a2db1;
+    width: 18px;
+    height: 18px;
 }
-
 
 .features-list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-}
-
-.feature-radio-label {
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    user-select: none;
-    transition: background-color 0.2s;
-}
-
-.feature-radio-label:hover {
-    background-color: #f5f5f5;
-}
-
-.feature-radio-label.selected {
-    background-color: #d0eaff;
-    font-weight: bold;
-}
-
-.feature-radio-label input[type="radio"] {
-    cursor: pointer;
+    gap: 0.75rem;
+    margin-top: 1rem;
 }
 
 .loading-message {
@@ -93,11 +107,14 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 1.2rem;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    z-index: 3;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    font-size: 1.3rem;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.25rem 2.5rem;
+    border-radius: 12px;
+    z-index: 20;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    font-weight: 600;
+    color: #5a2db1;
+    user-select: none;
+    pointer-events: none;
 }
-

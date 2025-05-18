@@ -1,6 +1,6 @@
 import './map-configurer.css';
-
 import {useEffect, useMemo, useState} from "react";
+import {useLocation} from "react-router-dom";
 import {fetchData} from "../../static/js/http";
 import MapElement from "../Map/MapElement";
 import {FeatureList} from "./FeatureList";
@@ -24,7 +24,14 @@ const extractAreas = (areas) => {
     return extractedStructure;
 }
 
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
+
 export default function MapConfigurer() {
+    const query = useQuery();
+    const product = query.get("product");
+
     const [layerProperties, setLayerProperties] = useState([]);
     const [rawAreas, setRawAreas] = useState({});
     const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +53,6 @@ export default function MapConfigurer() {
         }
     }, [availableYears]);
 
-
     const filteredAreas = useMemo(() => {
         return areas.filter(area =>
             area.featureId === selectedFeatureId &&
@@ -61,8 +67,11 @@ export default function MapConfigurer() {
     }, [selectedFeatureId]);
 
     useEffect(() => {
+        if (!product) return;
+
         setIsLoading(true);
-        const requestUrl = `${process.env.REACT_APP_BACKEND_URL}/api/v2/map/layers?product=8&hex_size=8`;
+        const requestUrl = `${
+            process.env.REACT_APP_BACKEND_URL}/api/v2/map/layers?product=${product}&hex_size=8`;
         fetchData(requestUrl, {method: "GET", headers: {Accept: "*/*"}})
             .then((response) => {
                 if (response != null) {
@@ -72,17 +81,13 @@ export default function MapConfigurer() {
             })
             .catch((error) => console.log(error))
             .finally(() => setIsLoading(false));
-    }, []);
+    }, [product]);
 
     useEffect(() => {
         if (layerProperties.length && !selectedLayerId) {
             setSelectedLayerId(layerProperties[0].id);
         }
     }, [layerProperties]);
-
-    useEffect(() => {
-        console.log("areas:", areas);
-    }, [areas]);
 
     useEffect(() => {
         const selectedLayer = layerProperties.find(layer => layer.id === selectedLayerId);
@@ -105,7 +110,6 @@ export default function MapConfigurer() {
             {isLoading
                 ? (<div className="loading-message">Загрузка данных...</div>)
                 : (<div className={"properties-container"}>
-
                     <h1>Категории</h1>
                     <LayerList layers={layerProperties}
                                selectedLayerId={selectedLayerId}
@@ -123,7 +127,6 @@ export default function MapConfigurer() {
                         )}
                     </>)}
                 </div>)}
-
         </div>
     );
 }

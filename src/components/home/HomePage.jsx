@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchData } from "../../static/js/http";
+import { LogoSvg } from "../LogoSvg";
 import "./home.css";
 
 export function HomePage() {
@@ -13,13 +14,16 @@ export function HomePage() {
             .catch(console.error);
     }, []);
 
-    const handleProductClick = (productId) => {
+    const handleProductClick = () => {
         navigate(`/products`);
     };
 
     return (
         <div className="homepage-container">
             <h1>Добро пожаловать в Map Analyser</h1>
+            <div className="logo-center">
+                <LogoSvg width={100} height={240} />
+            </div>
             <p>
                 Наш сервис помогает анализировать геопространственные данные,
                 визуализировать информацию и принимать решения на основе карт и данных.
@@ -33,7 +37,9 @@ export function HomePage() {
                         onClick={() => handleProductClick(product.id)}
                         role="button"
                         tabIndex={0}
-                        onKeyDown={e => { if (e.key === 'Enter') handleProductClick(product.id); }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") handleProductClick(product.id);
+                        }}
                     >
                         <div className="product-name">{product.fullName}</div>
                         <div className="product-description">{product.description}</div>

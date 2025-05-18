@@ -32,7 +32,6 @@ export function ProductsPage() {
                     >
                         <h2 className="product-title">{product.fullName}</h2>
                         <p className="product-description">{product.description}</p>
-                        <p className="product-price">{product.price.toFixed(2)} ₽</p>
 
                         {product.featureLayers && product.featureLayers.length > 0 && (
                             <div className="feature-layers">
@@ -53,6 +52,7 @@ export function ProductsPage() {
                                 ))}
                             </div>
                         )}
+                        <p className="product-price">{product.price.toFixed(2)} ₽</p>
                     </div>
                 ))}
             </div>

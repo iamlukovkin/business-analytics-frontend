@@ -1,0 +1,25 @@
+.year-slider-container {
+    width: 100%;
+    margin: 1rem 0;
+    /*text-align: center;*/
+}
+
+.year-slider-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.year-slider {
+    width: 100%;
+    accent-color: #4285f4;
+    cursor: pointer;
+}
+
+.year-slider-minmax {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #444;
+    margin-top: 0.25rem;
+}

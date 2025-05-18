@@ -1,3 +1,37 @@
 .header {
+    margin: 0;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; /* Центрирование по горизонтали */
+    gap: 1rem;
+    background-color: black;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    text-align: center; /* Для симметрии текста */
+}
 
+.logo-svg {
+    flex-shrink: 0;
+    width: 60px;
+    height: 52px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-svg:hover {
+    transform: scale(1.1);
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    user-select: none;
+    margin: 0;
 }

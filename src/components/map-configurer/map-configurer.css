@@ -1,0 +1,15 @@
+.map-details-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.properties-container {
+    min-width: 280px;
+    width: 30%;
+}
+
+.map-container {
+    width: 100%;
+}

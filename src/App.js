@@ -1,9 +1,10 @@
-import './static/css/App.css';
-import MapElement from './components/Map/Map';
+import MapConfigurer from "./components/map-configurer/MapConfigurer";
+import {Header} from "./components/header/Header";
 
 function App() {
   return (<>
-    <MapElement />
+    <Header />
+    <MapConfigurer />
   </>);
 }
 
